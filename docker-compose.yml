@@ -1,7 +1,7 @@
 version: '3.8'
 services:
     watchtower:
-        image: puzolmongol/watchtower_acb
+        image: puzolmongol/watchtower_acb:latest
         container_name: watchtower_acb
         volumes:
             - /var/run/docker.sock:/var/run/docker.sock
