@@ -2,9 +2,20 @@ version: '3.8'
 services:
     watchtower:
         image: puzolmongol/watchtower_acb
+        container_name: watchtower_acb
         volumes:
             - /var/run/docker.sock:/var/run/docker.sock
-        command: --interval 5
-  
-
-# #docker run -d   --name watchtower   -v /var/run/docker.sock:/var/run/docker.sock   v2tec/watchtower --interval 5
+        command: --interval 5 --debug false --cleanup true fluentd_acb
+        #environment:
+         #   - WATCHTOWER_NOTIFICATIONS=email 
+         #   - WATCHTOWER_NOTIFICATION_EMAIL_FROM=informatica@acbiluminacion.com
+         #   - WATCHTOWER_NOTIFICATION_EMAIL_TO=informatica@acbiluminacion.com
+         #   - WATCHTOWER_NOTIFICATION_EMAIL_SERVER=mail.acbiluminacion.com
+         #   - WATCHTOWER_NOTIFICATION_EMAIL_SERVER_USER=informatica@acbiluminacion.com
+         #   - WATCHTOWER_NOTIFICATION_EMAIL_SERVER_PASSWORD=1Vpnf3*1
+        logging:
+            driver: fluentd  
+            options:  
+                tag: "{{.ImageName}}/{{.Name}}/{{.ID}}"                  
+# 
+#docker run -d   --name watchtower   -v /var/run/docker.sock:/var/run/docker.sock   v2tec/watchtower fluentd_acb --interval 5
